@@ -1,0 +1,8 @@
+plugins {
+    id 'java'
+}
+
+
+dependencies {
+    compileOnly "com.github.librepdf:openpdf:${rootProject.versionNew}"
+}

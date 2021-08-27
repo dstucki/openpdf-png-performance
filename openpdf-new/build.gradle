@@ -1,0 +1,12 @@
+plugins {
+    id 'application'
+}
+
+application {
+    mainClass = 'com.github.dstucki.Main'
+}
+
+dependencies {
+    implementation "com.github.librepdf:openpdf:${rootProject.versionNew}"
+    implementation project(':common')
+}
