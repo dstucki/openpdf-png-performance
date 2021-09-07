@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class AddPngIntoPdf {
@@ -35,10 +37,12 @@ public class AddPngIntoPdf {
         final Document formPdf = new Document(PageSize.A4, 0f, 0f, 0f, 0f);
         PdfWriter.getInstance(formPdf, new FileOutputStream(pdfFile));
         formPdf.open();
-        final URL png = getPNG();
-        for (int i = 0; i < 10; i++) {
-            final Image instance = Image.getInstance(png);
-            formPdf.add(instance);
+        final List<URL> pngs = getPNG();
+        for (URL png : pngs) {
+            for (int i = 0; i < 10; i++) {
+                final Image instance = Image.getInstance(png);
+                formPdf.add(instance);
+            }
         }
         formPdf.close();
         return System.currentTimeMillis() - start;
@@ -53,7 +57,16 @@ public class AddPngIntoPdf {
     }
 
 
-    private static URL getPNG() throws MalformedURLException, URISyntaxException {
-        return Objects.requireNonNull(AddPngIntoPdf.class.getResource("/2486x3518.png")).toURI().toURL();
+    private static List<URL> getPNG() throws MalformedURLException, URISyntaxException {
+        List<URL> urls = new ArrayList<>();
+        urls.add(getUrl("/2486x3518.png"));
+        urls.add(getUrl("/2486x3518_0.png"));
+        urls.add(getUrl("/2486x3518_1.png"));
+        urls.add(getUrl("/2486x3518_2.png"));
+        return urls;
+    }
+
+    private static URL getUrl(String name) throws MalformedURLException, URISyntaxException {
+        return Objects.requireNonNull(AddPngIntoPdf.class.getResource(name)).toURI().toURL();
     }
 }
